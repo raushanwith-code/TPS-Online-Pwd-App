@@ -105,7 +105,7 @@ export default function Navbar() {
             </button>
 
             {/* Official Instagram Icon */}
-            <a
+            {/* <a
               href="https://www.instagram.com/priyadarshi6678?igsh=MTl4dzE1amRxOWowNA%3D%3D"
               target="_blank"
               rel="noopener noreferrer"
@@ -127,10 +127,10 @@ export default function Navbar() {
                 <circle cx="12" cy="12" r="5" fill="none" stroke="#fff" strokeWidth="1.8" />
                 <circle cx="17.2" cy="6.8" r="1.2" fill="#fff" />
               </svg>
-            </a>
+            </a> */}
 
             {/* Official YouTube Icon */}
-            <a
+            {/* <a
               href="https://www.youtube.com/@Theperfectstudycentre"
               target="_blank"
               rel="noopener noreferrer"
@@ -142,7 +142,7 @@ export default function Navbar() {
                 <rect x="2" y="5" width="20" height="14" rx="4" fill="#FF0000" />
                 <polygon points="10,8.5 16,12 10,15.5" fill="#FFFFFF" />
               </svg>
-            </a>
+            </a> */}
 
             {/* Admin Hub */}
             <Link
@@ -159,7 +159,7 @@ export default function Navbar() {
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-amber-500/20 hover:from-cyan-500/30 hover:to-amber-500/30 border border-cyan-400/40 text-cyan-200 text-xs font-bold transition-all shadow-[0_0_15px_rgba(56,189,248,0.2)] hover:scale-105 active:scale-95"
             >
               <User className="w-3.5 h-3.5 text-cyan-300" />
-              <span className="hidden sm:inline">विद्यार्थी</span>
+              {/* <span className="hidden sm:inline">विद्यार्थी</span> */}
             </Link>
           </div>
         </div>

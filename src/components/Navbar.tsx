@@ -71,7 +71,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links (No Emojis, Modern Vector Icons) */}
-          <nav className="hidden lg:flex items-center gap-1">
+          {/* <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href || (item.href === '/#videos' && false);
@@ -90,19 +90,19 @@ export default function Navbar() {
                 </Link>
               );
             })}
-          </nav>
+          </nav> */}
 
           {/* Right Action Controls */}
           <div className="flex items-center gap-2">
             {/* Search Trigger */}
-            <button
+            {/* <button
               onClick={() => setIsSearchOpen(true)}
               className="w-9 h-9 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 flex items-center justify-center text-slate-300 hover:text-cyan-400 transition-all hover:scale-105 active:scale-95"
               title="सर्च करें (Search Lectures & Quizzes)"
               aria-label="Search"
             >
               <Search className="w-4 h-4 text-cyan-400" />
-            </button>
+            </button> */}
 
             {/* Official Instagram Icon */}
             {/* <a

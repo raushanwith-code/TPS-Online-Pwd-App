@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Rich Cosmic Twilight Ocean Base */
+  --bg: #070d1e;
+  --bg-deep: #040814;
+  --bg-surface: #0e1836;
+  
+  /* Ultra-Premium Translucent Liquid Crystal Glass Tokens */
+  --card-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(35, 52, 98, 0.45) 45%, rgba(16, 26, 56, 0.6) 100%);
+  --card-glass-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(45, 68, 128, 0.55) 45%, rgba(22, 36, 76, 0.7) 100%);
+  --card-border: rgba(255, 255, 255, 0.18);
+  --card-border-glow: rgba(56, 189, 248, 0.45);
+  --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.38), 0 0 35px rgba(56, 189, 248, 0.1), inset 0 1.5px 0 rgba(255, 255, 255, 0.25);
+
+  --tx: #f8fafc;
+  --tx-muted: rgba(226, 232, 240, 0.75);
+  --tx-faint: rgba(148, 163, 184, 0.55);
+
+  /* Vibrant Accents */
+  --accent-cyan: #38bdf8;
+  --accent-indigo: #6366f1;
+  --accent-violet: #8b5cf6;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Devanagari", sans-serif;
+  background-color: var(--bg);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.18) 0%, transparent 55%),
+    radial-gradient(circle at 90% 30%, rgba(99, 102, 241, 0.16) 0%, transparent 50%),
+    radial-gradient(circle at 10% 70%, rgba(14, 165, 233, 0.14) 0%, transparent 50%),
+    radial-gradient(circle at 70% 90%, rgba(139, 92, 246, 0.12) 0%, transparent 50%);
+  color: var(--tx);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient Moving Color Lights */
+.water-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.water-ambient .wave-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.45;
+  animation: cosmicDrift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.water-ambient .wave-orb:nth-child(1) {
+  width: 55vmax;
+  height: 55vmax;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, rgba(7, 13, 30, 0) 70%);
+  top: -16vmax;
+  left: -14vmax;
+  animation-duration: 28s;
+}
+
+.water-ambient .wave-orb:nth-child(2) {
+  width: 50vmax;
+  height: 50vmax;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(7, 13, 30, 0) 70%);
+  top: 30vh;
+  right: -15vmax;
+  animation-duration: 24s;
+}
+
+.water-ambient .wave-orb:nth-child(3) {
+  width: 44vmax;
+  height: 44vmax;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, rgba(7, 13, 30, 0) 70%);
+  bottom: -10vmax;
+  left: 25vw;
+  animation-duration: 32s;
+}
+
+@keyframes cosmicDrift {
+  0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(4vw, 5vh, 0) scale(1.06) rotate(3deg); }
+  100% { transform: translate3d(-3vw, -4vh, 0) scale(0.96) rotate(-2deg); }
+}
+
+/* Ultra-Premium Luminous Translucent Glass Cards (Smooth 28px-32px Radius) */
+.luminous-card {
+  border-radius: 28px;
+  background: var(--card-glass);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luminous-card:hover {
+  background: var(--card-glass-hover);
+  border-color: var(--card-border-glow);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), 0 0 45px rgba(56, 189, 248, 0.22), inset 0 1.5px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+}
+
+/* --- JEWEL-TONED TRANSLUCENT SUBJECT CARDS (Smooth 28px Radius) --- */
+
+/* 1. Mathematics: Cyan & Aquamarine Liquid Crystal */
+.card-math {
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(56, 189, 248, 0.16) 0%, rgba(20, 50, 100, 0.48) 50%, rgba(12, 28, 65, 0.65) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), 0 0 35px rgba(56, 189, 248, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-math:hover {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), 0 0 50px rgba(56, 189, 248, 0.3), inset 0 1.5px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+}
+
+/* 2. Science: Emerald Aurora Liquid Crystal */
+.card-science {
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.16) 0%, rgba(12, 65, 55, 0.48) 50%, rgba(8, 38, 34, 0.65) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(16, 185, 129, 0.32);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), 0 0 35px rgba(16, 185, 129, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-science:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), 0 0 50px rgba(16, 185, 129, 0.3), inset 0 1.5px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+}
+
+/* 3. Social Science: Amber Topaz Liquid Crystal */
+.card-sst {
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(245, 158, 11, 0.16) 0%, rgba(80, 50, 20, 0.48) 50%, rgba(42, 25, 10, 0.65) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), 0 0 35px rgba(245, 158, 11, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-sst:hover {
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), 0 0 50px rgba(245, 158, 11, 0.3), inset 0 1.5px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+}
+
+/* 4. English: Amethyst Violet Liquid Crystal */
+.card-english {
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(139, 92, 246, 0.16) 0%, rgba(55, 40, 110, 0.48) 50%, rgba(26, 20, 62, 0.65) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(139, 92, 246, 0.32);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), 0 0 35px rgba(139, 92, 246, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-english:hover {
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), 0 0 50px rgba(139, 92, 246, 0.3), inset 0 1.5px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+}
+
+/* 5. Hindi: Ruby Coral Liquid Crystal */
+.card-hindi {
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(244, 63, 94, 0.16) 0%, rgba(85, 25, 58, 0.48) 50%, rgba(42, 12, 32, 0.65) 100%);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(244, 63, 94, 0.32);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), 0 0 35px rgba(244, 63, 94, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hindi:hover {
+  border-color: rgba(244, 63, 94, 0.6);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45), 0 0 50px rgba(244, 63, 94, 0.3), inset 0 1.5px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050916;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.35);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.6);
+}
+
+/* Shakes & Animations */
+@keyframes softShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: softShake 0.4s ease-in-out;
+}

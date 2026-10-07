@@ -1,0 +1,264 @@
+// Prisma Schema for TPS ONLINE CLASSES
+// Bihar Board Class 10th - Futuristic 2099 Learning Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum QuestionType {
+  SINGLE_CHOICE
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+}
+
+enum NoteFileType {
+  PDF
+  DOCX
+  PPTX
+  XLSX
+  ZIP
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  phone        String?   @unique
+  passwordHash String
+  role         Role      @default(STUDENT)
+  avatar       String?
+  board        String    @default("Bihar Board Class 10")
+  streakDays   Int       @default(1)
+  lastActiveAt DateTime  @default(now())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relations
+  lectureProgress LectureProgress[]
+  quizAttempts    QuizAttempt[]
+  personalNotes   PersonalNote[]
+  bookmarks       Bookmark[]
+  achievements    UserAchievement[]
+  notifications   Notification[]
+}
+
+model Subject {
+  id          String   @id @default(cuid())
+  name        String   // Mathematics, Science, Social Science, English, Hindi
+  hindiName   String   // गणित, विज्ञान, सामाजिक विज्ञान, अंग्रेजी, हिन्दी
+  code        String   @unique // math, science, sst, english, hindi
+  description String?
+  icon        String   @default("BookOpen")
+  accentColor String   @default("#00e5ff")
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  chapters Chapter[]
+  notes    Note[]
+  quizzes  Quiz[]
+}
+
+model Chapter {
+  id          String   @id @default(cuid())
+  subjectId   String
+  title       String
+  hindiTitle  String?
+  chapterNum  Int
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subject  Subject   @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  lectures Lecture[]
+  quizzes  Quiz[]
+  notes    Note[]
+
+  @@index([subjectId])
+}
+
+model Lecture {
+  id           String   @id @default(cuid())
+  chapterId    String
+  title        String
+  hindiTitle   String?
+  description  String?
+  youtubeUrl   String   // full URL or short URL
+  youtubeId    String   // official extracted 11-char ID
+  durationSec  Int      @default(0)
+  thumbnailUrl String?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  chapter       Chapter           @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  progress      LectureProgress[]
+  personalNotes PersonalNote[]
+  bookmarks     Bookmark[]
+
+  @@index([chapterId])
+  @@index([youtubeId])
+}
+
+model LectureProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  lectureId       String
+  completed       Boolean  @default(false)
+  lastPositionSec Int      @default(0)
+  watchedSec      Int      @default(0)
+  updatedAt       DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lecture Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lectureId])
+  @@index([userId])
+}
+
+model Quiz {
+  id            String   @id @default(cuid())
+  subjectId     String
+  chapterId     String?
+  title         String
+  hindiTitle    String?
+  description   String?
+  durationMins  Int      @default(15) // time limit
+  passScore     Int      @default(60) // percentage
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  subject   Subject       @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  chapter   Chapter?      @relation(fields: [chapterId], references: [id], onDelete: SetNull)
+  questions Question[]
+  attempts  QuizAttempt[]
+
+  @@index([subjectId])
+  @@index([chapterId])
+}
+
+model Question {
+  id            String       @id @default(cuid())
+  quizId        String
+  questionText  String
+  hindiText     String?
+  type          QuestionType @default(SINGLE_CHOICE)
+  options       String[]     // JSON or array of 4 options
+  correctOption Int          // 0, 1, 2, 3
+  explanation   String?
+  hindiExpl     String?
+  order         Int          @default(0)
+  createdAt     DateTime     @default(now())
+
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([quizId])
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  quizId      String
+  score       Int      // e.g. 8
+  totalMarks  Int      // e.g. 10
+  percentage  Float    // e.g. 80.0
+  timeTakenSec Int     @default(0)
+  answersJson Json     // stores selected answers: { "qId": 2, ... }
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([quizId])
+}
+
+model Note {
+  id          String       @id @default(cuid())
+  subjectId   String
+  chapterId   String?
+  title       String
+  fileUrl     String       // PDF or doc URL / path
+  fileType    NoteFileType @default(PDF)
+  fileSizeKb  Int          @default(1024)
+  downloads   Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  subject   Subject    @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  chapter   Chapter?   @relation(fields: [chapterId], references: [id], onDelete: SetNull)
+  bookmarks Bookmark[]
+
+  @@index([subjectId])
+  @@index([chapterId])
+}
+
+model PersonalNote {
+  id        String   @id @default(cuid())
+  userId    String
+  lectureId String
+  timestamp Int      @default(0) // video timestamp in seconds
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lecture Lecture @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([lectureId])
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  lectureId String?
+  noteId    String?
+  createdAt DateTime @default(now())
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lecture Lecture? @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  note    Note?    @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lectureId, noteId])
+  @@index([userId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model UserAchievement {
+  id          String   @id @default(cuid())
+  userId      String
+  badgeCode   String   // STREAK_7, QUIZ_MASTER, BIHAR_TOPPER, FIRST_LECTURE
+  title       String
+  description String
+  icon        String   @default("Award")
+  unlockedAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeCode])
+  @@index([userId])
+}

@@ -60,11 +60,6 @@ npm install
 ### 2. Environment Setup
 Copy `.env.example` to `.env`:
 ```env
-DATABASE_URL="postgresql://user:password@ep-sample-1234.us-east-2.aws.neon.tech/neondb?sslmode=require"
-JWT_SECRET="tps_online_classes_super_secret_jwt_key_2099_token"
-ADMIN_KEY="TPS2099_DIRECTOR"
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
 
 > **Note**: The app includes a resilient data store layer that works immediately out of the box with zero external database setup for local testing and demonstration. Whenever a real PostgreSQL `DATABASE_URL` is configured, Prisma connects seamlessly.
 
